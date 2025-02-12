@@ -1,4 +1,5 @@
-const apiEndpoint = "https://fa-todo-backend-baqmes.azurewebsites.net/api/tasks";
+const apiEndpoint =
+  "https://bend-210-300621.proudhill-88e1fb7b.northeurope.azurecontainerapps.io/api/tasks/";
 
 $(document).ready(function () {
   // Charger les tâches au démarrage
@@ -31,22 +32,30 @@ $(document).ready(function () {
     const $taskElement = $(this).closest("li"); // Trouve l'élément li parent
     const taskId = $taskElement.data("id");
     const isCompleted = $taskElement.hasClass("completed");
-  
+
     // Récupère le texte directement comme un nœud
-    const description = $taskElement.contents().filter(function () {
-      return this.nodeType === 3; // Node type 3 = texte
-    }).text().trim();
-  
+    const description = $taskElement
+      .contents()
+      .filter(function () {
+        return this.nodeType === 3; // Node type 3 = texte
+      })
+      .text()
+      .trim();
+
     console.log("Description trouvée :", description);
-  
+
     if (!description) {
       console.error("Erreur : la description de la tâche est vide !");
       return;
     }
-  
+
     // Prépare l'objet mis à jour
-    const updatedTask = { id: taskId, description: description, completed: !isCompleted };
-  
+    const updatedTask = {
+      id: taskId,
+      description: description,
+      completed: !isCompleted,
+    };
+
     try {
       await fetch(apiEndpoint, {
         method: "PUT",
@@ -90,11 +99,7 @@ $(document).ready(function () {
           .text(task.description)
           .data("id", task.id)
           .addClass(task.completed ? "completed" : "")
-          .append(
-            $("<button>")
-              .text("Delete")
-              .addClass("delete-btn")
-          )
+          .append($("<button>").text("Delete").addClass("delete-btn"))
           .prepend(
             $("<input>")
               .attr("type", "checkbox")
