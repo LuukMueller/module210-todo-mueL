@@ -32,13 +32,13 @@ jobs:
           output_location: "."  # Path to build output (can be configured based on your app)
 
       - name: Run Lighthouse Tests
-        if: success()  # Only run Lighthouse tests if the build was successful
+        if: success()  # Nur ausführen, wenn das Deployment erfolgreich war
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            https://todo-app.luukmueller.emf-informatique.ch  # Your live app URL
-          upload: true  # Upload results to Lighthouse CI dashboard
-          configFile: './lighthouserc.json'  # Path to your lighthouserc.json configuration file
+            https://todo-app.luukmueller.emf-informatique.ch
+          configPath: './lighthouserc.json'  # Konfiguriere den Pfad zur lighthouserc.json
+          uploadArtifacts: true  # Erlaube den Upload von Lighthouse-Ergebnissen
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
