@@ -40,7 +40,8 @@ jobs:
           urls: |
             https://todo-app.luukmueller.emf-informatique.ch
           upload: true
-          # Optional: Füge weitere Konfigurationen hinzu, je nach Bedarf, z. B. Schwellenwerte, Report-Dateien usw.
+          # Ajoutez cette ligne pour utiliser lighthouserc.json dans le repository
+          configFile: './lighthouserc.json'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
