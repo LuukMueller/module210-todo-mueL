@@ -38,8 +38,8 @@ jobs:
       - name: Lighthouse CI Action
         uses: treosh/lighthouse-ci-action@v12
         with:
-          url: 'https://todo-app.luukmueller.emf-informatique.ch/'  # URL de votre application déployée
-          settings: './.lighthouserc.json'  # Si vous avez un fichier de configuration Lighthouse personnalisé
+          urls: |
+            https://todo-app.luukmueller.emf-informatique.ch/  # URL de votre application déployée
           uploadArtifacts: true  # Si vous souhaitez télécharger les rapports Lighthouse comme artefacts
 
   close_pull_request_job:
