@@ -1,0 +1,21 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["https://todo-app.luukmueller.emf-informatique.ch"], 
+      "numberOfRuns": 1  
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": {
+          "minScore": 0.9  
+        },
+        "categories:accessibility": {
+          "minScore": 0.9  
+        },
+        "categories:seo": {
+          "minScore": 0.9  
+        }
+      }
+    }
+  }
+}
