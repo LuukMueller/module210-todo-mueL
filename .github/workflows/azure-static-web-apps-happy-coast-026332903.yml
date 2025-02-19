@@ -25,23 +25,20 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_HAPPY_COAST_026332903 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}  # Used for GitHub integrations (i.e. PR comments)
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          app_location: "./src/frontend" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "." # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: "./src/frontend"  # Path to your frontend app source code
+          api_location: ""  # Path to API code (if any)
+          output_location: "."  # Path to build output (can be configured based on your app)
 
       - name: Run Lighthouse Tests
-        if: success()  # Nur ausführen, wenn das Deployment erfolgreich war
+        if: success()  # Only run Lighthouse tests if the build was successful
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            https://todo-app.luukmueller.emf-informatique.ch
-          upload: true
-          # Ajoutez cette ligne pour utiliser lighthouserc.json dans le repository
-          configFile: './lighthouserc.json'
+            https://todo-app.luukmueller.emf-informatique.ch  # Your live app URL
+          upload: true  # Upload results to Lighthouse CI dashboard
+          configFile: './lighthouserc.json'  # Path to your lighthouserc.json configuration file
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
