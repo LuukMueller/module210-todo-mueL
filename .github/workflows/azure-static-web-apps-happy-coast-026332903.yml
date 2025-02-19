@@ -19,6 +19,14 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      # Füge Lighthouse CI Action hier ein
+      - name: Lighthouse CI Action
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Token, um mit GitHub-APIs zu interagieren
+          urls: 'https://yourwebsiteurl.com'  # Gebe die URL an, die Lighthouse überprüfen soll. Ersetze mit deinem tatsächlichen URL.
+          
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
