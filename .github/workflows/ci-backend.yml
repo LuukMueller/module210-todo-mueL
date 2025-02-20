@@ -24,7 +24,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}  # Le nom d'utilisateur du registre Docker (peut être un token d'authentification)
-          password: ${{ secrets.DOCKER_PASSWORD }}  # Le mot de passe ou token d'authentification pour Docker
+          password: ${{ secrets.REGISTRY_TOKEN }}  # Le mot de passe ou token d'authentification pour Docker
 
       # Étape 3 : Construire l'image Docker
       - name: Build Docker image
