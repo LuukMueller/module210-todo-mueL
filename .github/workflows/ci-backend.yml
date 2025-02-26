@@ -28,10 +28,6 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}  # GitHub Secret für Docker-Passwort/Token
           registry: ${{ env.REG_NAME }}  # Die verwendete Registry (z.B. exo.container-registry.com)
 
-      # Schritt 4: In das Verzeichnis wechseln (src/backend)
-      - name: Change directory to src/backend
-        run: |
-          cd /src/backend
 
       # Schritt 5: Docker-Image bauen
       - name: Build Docker image
