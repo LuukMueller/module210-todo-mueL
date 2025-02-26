@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t exo.container-registry.com/c213-emf/todo-app:latest .
+          docker build -t exo.container-registry.com/c213-emf/todo-app:latest ./src/backend
 
       - name: Push Docker image to registry
         run: |
