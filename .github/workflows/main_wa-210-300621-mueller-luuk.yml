@@ -20,14 +20,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: 'acr300621210.azurecr.io'
-        username: ${{ secrets.AzureAppService_ContainerUsername }}
-        password: ${{ secrets.AzureAppService_ContainerPassword }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_96aa261e36e5494e837263ff626bbed4 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername }}/todo-app:${{ github.sha }}
+        tags: acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}/todo-app:${{ github.sha }}
         context: ./src/backend
         file: ./src/backend/Dockerfile
 
@@ -42,5 +42,5 @@ jobs:
       with:
         app-name: 'wa-210-300621-mueller-luuk'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile }}
-        images: 'acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername }}/todo-app:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_04aa154bcf764ce1ae3a036ed68f4f7b }}
+        images: 'acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}/todo-app:${{ github.sha }}'
