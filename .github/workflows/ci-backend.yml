@@ -3,36 +3,36 @@ name: Build and push Docker image to private registry
 on:
   push:
     branches:
-      - main  # Trigger auf 'main' Branch
+      - main  # Trigger on 'main' branch
 
 env:
-  REG_NAME: "exo.container-registry.com"  # Die Registry URL
-  IMAGE_NAME: "todo-app"  # Der Name des Docker-Images
-  REGISTRY: "${REG_NAME}/c213-emf"  # Das Repository innerhalb der Registry
-  TAG_NAME: "MUL"  # Der Tag für das Image
+  REG_NAME: "exo.container-registry.com"  # The registry URL
+  IMAGE_NAME: "todo-app"  # The name of the Docker image
+  REGISTRY: "${REG_NAME}/c213-emf"  # The repository within the registry
+  TAG_NAME: "MUL"  # The tag for the image
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest  # Build auf einer Ubuntu VM
+    runs-on: ubuntu-latest  # Build on an Ubuntu VM
 
     steps:
-      # Schritt 1: Code aus dem Repository auschecken
+      # Step 1: Checkout the repository code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Schritt 2: Anmeldung bei der privaten Docker-Registry
+      # Step 2: Log in to the Docker registry securely
       - name: Log in to Docker registry
         uses: docker/login-action@v2
         with:
-          username: ${{ quentin.badoud@edufr.ch }}  # Dein Benutzername für das Registry
-          password: ${{ C4cG4FfJBBpe4cWHSZ5HjgXWFR4wa7wU }}  # Dein Token oder Passwort für das Registry
+          username: ${{ secrets.DOCKER_USERNAME }}  # Use GitHub secret for the Docker username
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Use GitHub secret for the Docker password/token
 
-      # Schritt 3: Docker-Image bauen
+      # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
           docker build -t $REGISTRY/$IMAGE_NAME:$TAG_NAME .
 
-      # Schritt 4: Docker-Image in die private Registry pushen
+      # Step 4: Push the Docker image to the private registry
       - name: Push Docker image
         run: |
           docker push $REGISTRY/$IMAGE_NAME:$TAG_NAME
