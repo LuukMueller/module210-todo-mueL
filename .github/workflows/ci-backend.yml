@@ -1,37 +1,38 @@
-name: Build and save my Docker image to a registry
+name: Build and push Docker image to private registry
 
 on:
   push:
     branches:
-      - main  # Déclenchement lorsque le code est poussé sur la branche main
+      - main  # Trigger auf 'main' Branch
 
 env:
-  REG_NAME: "nomduregistre" # Nom de votre registre (sans "azurecr.io")
-  IMAGE_NAME: "backend-app" # Nom de l'image Docker que vous souhaitez créer
-  REGISTRY: "${REG_NAME}.azurecr.io"  # Repos dans Azure Registry (ou un autre registre Docker si nécessaire)
+  REG_NAME: "exo.container-registry.com"  # Die Registry URL
+  IMAGE_NAME: "todo-app"  # Der Name des Docker-Images
+  REGISTRY: "${REG_NAME}/c213-emf"  # Das Repository innerhalb der Registry
+  TAG_NAME: "MUL"  # Der Tag für das Image
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest  # Exécution sur une machine virtuelle Ubuntu
+    runs-on: ubuntu-latest  # Build auf einer Ubuntu VM
 
     steps:
-      # Étape 1 : Vérifier le code du repository
+      # Schritt 1: Code aus dem Repository auschecken
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Étape 2 : Se connecter au registre Docker
+      # Schritt 2: Anmeldung bei der privaten Docker-Registry
       - name: Log in to Docker registry
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Le nom d'utilisateur du registre Docker (peut être un token d'authentification)
-          password: ${{ secrets.REGISTRY_TOKEN }}  # Le mot de passe ou token d'authentification pour Docker
+          username: ${{ secrets.DOCKER_USERNAME }}  # Dein Benutzername für das Registry
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Dein Token oder Passwort für das Registry
 
-      # Étape 3 : Construire l'image Docker
+      # Schritt 3: Docker-Image bauen
       - name: Build Docker image
         run: |
-          docker build -t $REGISTRY/$IMAGE_NAME:latest .  # Construire l'image avec le tag "latest"
+          docker build -t $REGISTRY/$IMAGE_NAME:$TAG_NAME .
 
-      # Étape 4 : Pousser l'image Docker dans le registre
+      # Schritt 4: Docker-Image in die private Registry pushen
       - name: Push Docker image
         run: |
-          docker push $REGISTRY/$IMAGE_NAME:latest  # Pousser l'image sur le registre Docker
+          docker push $REGISTRY/$IMAGE_NAME:$TAG_NAME
