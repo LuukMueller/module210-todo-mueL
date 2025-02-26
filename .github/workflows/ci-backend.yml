@@ -30,12 +30,12 @@ jobs:
       # Schritt 4: In das Verzeichnis wechseln (src/backend)
       - name: Change directory to src/backend
         run: |
-          cd ./src/backend
+          cd /src/backend
 
       # Schritt 5: Docker-Image bauen
       - name: Build Docker image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} .
+          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} ./src/backend
 
       # Schritt 6: Docker-Image in die Registry pushen
       - name: Push Docker image to registry
