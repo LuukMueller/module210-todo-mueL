@@ -28,17 +28,24 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}  # GitHub Secret für Docker-Passwort/Token
           registry: ${{ env.REG_NAME }}  # Die verwendete Registry (z.B. exo.container-registry.com)
 
+                # Schritt 4: In das Verzeichnis wechseln (src/backend)
+      - name: Change directory to src/backend
+        run: |
+          cd src/backend
+
       # Schritt 3: Docker-Image aus der Registry ziehen
       - name: Pull Docker image from registry
         run: |
           docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} || echo "Image not found, proceeding with build."
 
-      # Schritt 4: Docker-Image bauen
+
+
+      # Schritt 5: Docker-Image bauen
       - name: Build Docker image
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} .
 
-      # Schritt 5: Docker-Image in die Registry pushen
+      # Schritt 6: Docker-Image in die Registry pushen
       - name: Push Docker image to registry
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
