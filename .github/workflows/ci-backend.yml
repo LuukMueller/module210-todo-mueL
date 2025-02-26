@@ -26,14 +26,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}  # GitHub Secret für Docker-Benutzernamen
           password: ${{ secrets.DOCKER_TOKEN }}  # GitHub Secret für Docker-Passwort/Token
-          registry: ${{ env.REG_NAME }}  # Die verwendete Registry (z.B. nomduregistre.azurecr.io)
+          registry: ${{ env.REG_NAME }}  # Die verwendete Registry (z.B. exo.container-registry.com)
 
-      # Schritt 3: Docker-Image bauen
+      # Schritt 3: Docker-Image aus der Registry ziehen
+      - name: Pull Docker image from registry
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} || echo "Image not found, proceeding with build."
+
+      # Schritt 4: Docker-Image bauen
       - name: Build Docker image
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} .
 
-      # Schritt 4: Docker-Image in die Registry pushen
+      # Schritt 5: Docker-Image in die Registry pushen
       - name: Push Docker image to registry
         run: |
-          docker push exo.container-registry.com/c213-emf/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
