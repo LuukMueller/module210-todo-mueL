@@ -1,5 +1,3 @@
-# Set up the workflow for building and deploying Docker app to Azure Web App
-
 name: Build and Deploy Docker App to Azure Web App
 
 on:
@@ -36,10 +34,11 @@ jobs:
 
     steps:
       - name: Deploy Docker image to Azure Web App
-        uses: azure/webapps-container-deploy@v2
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: 'wa-210-300621-muellerluuk'
-          images: 'exo.container-registry.com/c213-emf/todo-app:latest'
-          registry-url: 'exo.container-registry.com'
-          registry-username: ${{ secrets.DOCKER_USERNAME }}
-          registry-password: ${{ secrets.DOCKER_TOKEN }}
+          app-name: 'wa-210-300621-muellerluuk'  # Der Name deiner Azure Web App
+          slot-name: 'Production'  # Der Slotname, falls du diesen verwendest (optional)
+          images: 'exo.container-registry.com/c213-emf/todo-app:latest'  # Das Docker-Image, das du deployen möchtest
+          registry-url: 'exo.container-registry.com'  # Die URL der Docker-Registry
+          registry-username: ${{ secrets.DOCKER_USERNAME }}  # Dein Docker-Username
+          registry-password: ${{ secrets.DOCKER_TOKEN }}  # Dein Docker-Token
