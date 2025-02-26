@@ -38,7 +38,7 @@ jobs:
           urls: |
             https://todo-app.luukmueller.emf-informatique.ch
           configPath: './lighthouserc.json'  # Konfiguriere den Pfad zur lighthouserc.json
-          uploadArtifacts: true  # Erlaube den Upload von Lighthouse-Ergebnissen
+          uploadArtifacts: false  # Erlaube den Upload von Lighthouse-Ergebnissen
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
