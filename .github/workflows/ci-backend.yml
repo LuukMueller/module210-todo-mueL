@@ -3,13 +3,13 @@ name: Build and save my Docker image to a registry
 on:
   push:
     branches:
-      - main  # Trigger wenn auf den 'main' Branch gepusht wird
+      - main  # Trigger, wenn auf den 'main' Branch gepusht wird
 
 env:
   REG_NAME: "exo.container-registry.com"  # Name des Registrys (ohne 'azurecr.io')
   IMAGE_NAME: "todo-app"  # Der Name des Docker-Images
   REGISTRY: "exo.container-registry.com/c213-emf"  # Das Repository innerhalb des Registrys
-  TAG_NAME: "MUL"  # Tag für das Image, z.B. 'latest' oder 'MUL'
+  TAG_NAME: "MUL-latest"  # Tag für das Image, z.B. 'MUL-latest'
 
 jobs:
   build-and-deploy:
