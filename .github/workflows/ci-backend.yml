@@ -31,7 +31,8 @@ jobs:
       # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} .
+          docker build -f ./docker/Dockerfile -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} .
+
 
       # Step 4: Push the Docker image to the private registry
       - name: Push Docker image
