@@ -8,7 +8,6 @@ on:
 env:
   REG_NAME: "exo.container-registry.com"  # Name des Registrys (ohne 'azurecr.io')
   IMAGE_NAME: "todo-app"  # Der Name des Docker-Images
-  REGISTRY: "exo.container-registry.com/c213-emf"  # Die vollständige Registry-URL
   TAG_NAME: "ML-latest"  # Tag für das Image (z.B. 'latest')
 
 jobs:
@@ -28,15 +27,10 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}  # GitHub Secret für Docker-Passwort/Token
           registry: ${{ env.REG_NAME }}  # Die verwendete Registry (z.B. exo.container-registry.com)
 
-      # Schritt 3: Docker-Image aus der Registry ziehen
-      - name: Pull Docker image from registry
-        run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} || echo "Image not found, proceeding with build."
-
       # Schritt 4: In das Verzeichnis wechseln (src/backend)
       - name: Change directory to src/backend
         run: |
-          cd src/backend
+          cd ./src/backend
 
       # Schritt 5: Docker-Image bauen
       - name: Build Docker image
