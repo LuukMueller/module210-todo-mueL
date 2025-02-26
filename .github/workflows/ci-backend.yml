@@ -6,9 +6,9 @@ on:
       - main  # Trigger, wenn auf den 'main' Branch gepusht wird
 
 env:
-  REG_NAME: "acr300621210"  # Name des Registrys (ohne 'azurecr.io')
+  REG_NAME: "exo.container-registry.com"  # Name des Registrys (ohne 'azurecr.io')
   IMAGE_NAME: "todo-app"  # Der Name des Docker-Images
-  REGISTRY: "acr300621210.azurecr.io"  # Die vollständige Registry-URL
+  REGISTRY: "exo.container-registry.com/c213-emf"  # Die vollständige Registry-URL
   TAG_NAME: "ML-latest"  # Tag für das Image (z.B. 'latest')
 
 jobs:
