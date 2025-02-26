@@ -8,6 +8,7 @@ on:
 env:
   REG_NAME: "exo.container-registry.com"  # Name des Registrys (ohne 'azurecr.io')
   IMAGE_NAME: "todo-app"  # Der Name des Docker-Images
+  REGISTRY: "exo.container-registry.com/c213-emf"  # Die vollständige Registry-URL
   TAG_NAME: "ML-latest"  # Tag für das Image (z.B. 'latest')
 
 jobs:
