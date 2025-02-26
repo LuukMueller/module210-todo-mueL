@@ -24,8 +24,8 @@ jobs:
       - name: Log in to Docker registry
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Dein Benutzername für das Registry
-          password: ${{ secrets.DOCKER_PASSWORD }}  # Dein Token oder Passwort für das Registry
+          username: ${{ quentin.badoud@edufr.ch }}  # Dein Benutzername für das Registry
+          password: ${{ C4cG4FfJBBpe4cWHSZ5HjgXWFR4wa7wU }}  # Dein Token oder Passwort für das Registry
 
       # Schritt 3: Docker-Image bauen
       - name: Build Docker image
