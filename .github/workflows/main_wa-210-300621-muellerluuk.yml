@@ -42,4 +42,4 @@ jobs:
           images: 'exo.container-registry.com/c213-emf/todo-app:latest'
           registry-url: 'exo.container-registry.com'
           registry-username: ${{ secrets.DOCKER_USERNAME }}
-          registry-password: ${{ secrets.DOCKER_PASSWORD }}
+          registry-password: ${{ secrets.DOCKER_TOKEN }}
