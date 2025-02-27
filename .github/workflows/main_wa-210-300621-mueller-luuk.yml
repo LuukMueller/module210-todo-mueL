@@ -1,4 +1,7 @@
-name: Build and Deploy Docker App to Azure Web App
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - wa-210-300621-mueller-luuk
 
 on:
   push:
@@ -16,20 +19,19 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Log in to Docker registry
+    - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: 'https://acr300621210.azurecr.io'
-        username: ${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_96aa261e36e5494e837263ff626bbed4 }}
+        registry: https://acr300621210.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_6353e32e551d4ea896a205fa4fdedd2f }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_92798ecba64e4f52b4dc9f1f66e6d481 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}/todo-app:${{ github.sha }}
-        context: ./src/backend
-        file: ./src/backend/Dockerfile
+        tags: acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6353e32e551d4ea896a205fa4fdedd2f }}/todo-app:${{ github.sha }}
+        file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,5 +47,5 @@ jobs:
       with:
         app-name: 'wa-210-300621-mueller-luuk'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_04aa154bcf764ce1ae3a036ed68f4f7b }}
-        images: 'acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}/todo-app:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f53ee7e9468a45aea23c310796ccd988 }}
+        images: 'acr300621210.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6353e32e551d4ea896a205fa4fdedd2f }}/todo-app:${{ github.sha }}'
