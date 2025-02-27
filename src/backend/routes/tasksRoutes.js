@@ -1,61 +1,66 @@
 "use strict";
 
-let express = require("express"),
-    router = express.Router(),
-    db = require('../db');
+const express = require("express");
+const router = express.Router();
+const db = require("../db");
 
-// GET 
+// GET
 router.get("/", async (req, res, next) => {
     let conn;
     try {
-        const result = await db.pool.query("select * from tasks");
-        res.send(result);
+        conn = await db.pool.getConnection(); // Verbindung holen
+        const result = await conn.query("SELECT * FROM tasks");
+        res.json(result);
     } catch (err) {
-        throw err;
+        next(err); // Fehler an Express weiterleiten
     } finally {
-        if (conn) return conn.release();
+        if (conn) conn.release(); // Verbindung freigeben
     }
 });
 
-// POST 
+// POST
 router.post("/", async (req, res, next) => {
-    let task = req.body;
     let conn;
     try {
-        const result = await db.pool.query("insert into tasks (description) values (?)", [task.description]);
-        res.send(result);
+        const { description } = req.body;
+        conn = await db.pool.getConnection();
+        const result = await conn.query("INSERT INTO tasks (description) VALUES (?)", [description]);
+        res.json({ id: result.insertId, description });
     } catch (err) {
-        throw err;
+        next(err);
     } finally {
-        if (conn) return conn.release();
+        if (conn) conn.release();
     }
 });
 
-// PUT 
+// PUT
 router.put("/", async (req, res, next) => {
-    let task = req.body;
     let conn;
     try {
-        const result = await db.pool.query("update tasks set description = ?, completed = ? where id = ?", [task.description, task.completed, task.id]);
-        res.send(result);
+        const { id, description, completed } = req.body;
+        conn = await db.pool.getConnection();
+        const result = await conn.query("UPDATE tasks SET description = ?, completed = ? WHERE id = ?", 
+            [description, completed, id]);
+        res.json({ message: "Updated successfully", affectedRows: result.affectedRows });
     } catch (err) {
-        throw err;
+        next(err);
     } finally {
-        if (conn) return conn.release();
+        if (conn) conn.release();
     }
 });
 
 // DELETE
 router.delete("/", async (req, res, next) => {
-    let id = req.query.id;
     let conn;
     try {
-        const result = await db.pool.query("delete from tasks where id = ?", [id]);
-        res.send(result);
+        const { id } = req.query;
+        conn = await db.pool.getConnection();
+        const result = await conn.query("DELETE FROM tasks WHERE id = ?", [id]);
+        res.json({ message: "Deleted successfully", affectedRows: result.affectedRows });
     } catch (err) {
-        throw err;
+        next(err);
     } finally {
-        if (conn) return conn.release();
+        if (conn) conn.release();
     }
 });
 
