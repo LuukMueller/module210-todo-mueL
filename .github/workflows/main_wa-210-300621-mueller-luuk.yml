@@ -19,7 +19,7 @@ jobs:
     - name: Log in to Docker registry
       uses: docker/login-action@v2
       with:
-        registry: 'acr300621210.azurecr.io'
+        registry: 'https://acr300621210.azurecr.io'
         username: ${{ secrets.AzureAppService_ContainerUsername_661c6631022447c7aab795e4d73f6fa3 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_96aa261e36e5494e837263ff626bbed4 }}
 
@@ -34,6 +34,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
     - name: Deploy to Azure Web App
